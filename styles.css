@@ -103,6 +103,13 @@ a { color: inherit; }
 .section-head { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 14px; }
 h2 { font-weight: 900; font-size: clamp(26px, 6vw, 38px); letter-spacing: -0.01em; line-height: 1.1; }
 .count { font: 400 13px "IBM Plex Mono", monospace; color: var(--muted); white-space: nowrap; }
+.types { display: flex; gap: 8px; margin: 0 0 12px; }
+.type-tab {
+  flex: 1; min-height: 48px; border-radius: 14px; border: 1px solid rgba(232,195,116,0.35);
+  background: transparent; color: inherit; font: 600 15px Montserrat, sans-serif; cursor: pointer;
+}
+.type-tab[aria-selected="true"] { background: rgba(232,195,116,0.14); border-color: var(--gold); color: var(--gold-soft); }
+.type-tab small { font-family: "IBM Plex Mono", monospace; opacity: 0.7; margin-left: 6px; }
 .filters {
   position: sticky; top: 65px; z-index: 10;
   display: flex; gap: 8px; overflow-x: auto; padding: 10px 0 14px;

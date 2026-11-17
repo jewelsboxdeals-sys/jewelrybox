@@ -7,15 +7,18 @@
       heroEyebrow: "SPÉCIAL FÊTES",
       heroLine1: "Le luxe au poignet,",
       heroLine2: "tous à 3 000 FCFA",
-      heroSub: "Bracelets dorés, argentés, acrylique et perles. Choisis ton modèle, commande en un clic sur WhatsApp.",
-      heroCta: "Voir les bracelets",
+      heroSub: "Bracelets à 3 000 FCFA et boucles d’oreilles dès 2 000 FCFA. Choisis ton modèle, commande en un clic sur WhatsApp.",
+      heroCta: "Voir la collection",
       heroWa: "Écrire sur WhatsApp",
       perk1a: "Commande simple", perk1b: "par WhatsApp",
       perk2a: "Livraison", perk2b: "Douala et tout le Cameroun",
       perk3a: "Prix de gros", perk3b: "pour revendeurs",
       catTitle: "Nos bracelets",
+      catTitleE: "Nos boucles d’oreilles",
+      types: { bracelet: "Bracelets", earring: "Boucles d’oreilles" },
+      onRequest: "Prix sur demande",
       howTitle: "Comment commander",
-      how1: "Choisis ton bracelet et appuie sur « Commander ».",
+      how1: "Choisis ton bijou et appuie sur « Commander ».",
       how2: "WhatsApp s’ouvre avec le modèle et la référence déjà écrits.",
       how3: "On confirme la disponibilité et on organise la livraison avec toi.",
       wsEyebrow: "REVENDEURS",
@@ -23,7 +26,7 @@
       wsText: "Profite de nos prix de gros sur toute la collection. Écris-nous pour recevoir les tarifs.",
       wsCta: "Demander les prix de gros",
       footNote: "Bijoux fantaisie : doré, argenté, acrylique et perles fantaisie.",
-      cats: { all: "Tous", gold: "Doré", silver: "Argenté", acrylic: "Acrylique", rose: "Rosé & Perles" },
+      cats: { all: "Tous", gold: "Doré", silver: "Argenté", acrylic: "Acrylique", rose: "Rosé & Perles", pearl: "Perles", colour: "Couleurs" },
       count: (n) => `${n} modèle${n > 1 ? "s" : ""}`,
       order: "Commander",
       orderLong: "Commander sur WhatsApp",
@@ -36,7 +39,7 @@
       close: "Fermer",
       msgProduct: (p, url) =>
         `Bonjour Jewelry Box 👋\nJe veux commander : ${p.name} (Réf. ${p.code}) – ${p.priceText}.\nEst-il disponible ?\n${url}`,
-      msgHello: "Bonjour Jewelry Box 👋 J’aimerais voir vos bracelets disponibles.",
+      msgHello: "Bonjour Jewelry Box 👋 J’aimerais voir vos bijoux disponibles.",
       msgWholesale: "Bonjour Jewelry Box 👋 Je suis revendeur(se) et je voudrais recevoir vos prix de gros.",
     },
     en: {
@@ -44,15 +47,18 @@
       heroEyebrow: "HOLIDAY SPECIAL",
       heroLine1: "Luxury on your wrist,",
       heroLine2: "all at 3,000 FCFA",
-      heroSub: "Gold-tone, silver-tone, acrylic and pearl bracelets. Pick your favourite and order in one tap on WhatsApp.",
-      heroCta: "See the bracelets",
+      heroSub: "Bracelets at 3,000 FCFA and earrings from 2,000 FCFA. Pick your favourite and order in one tap on WhatsApp.",
+      heroCta: "See the collection",
       heroWa: "Message us on WhatsApp",
       perk1a: "Easy ordering", perk1b: "on WhatsApp",
       perk2a: "Delivery", perk2b: "Douala and all of Cameroon",
       perk3a: "Wholesale prices", perk3b: "for resellers",
       catTitle: "Our bracelets",
+      catTitleE: "Our earrings",
+      types: { bracelet: "Bracelets", earring: "Earrings" },
+      onRequest: "Price on request",
       howTitle: "How to order",
-      how1: "Pick your bracelet and tap “Order”.",
+      how1: "Pick your piece and tap “Order”.",
       how2: "WhatsApp opens with the model and reference already written.",
       how3: "We confirm it’s available and arrange delivery with you.",
       wsEyebrow: "RESELLERS",
@@ -60,7 +66,7 @@
       wsText: "Get wholesale prices on the whole collection. Message us to receive the price list.",
       wsCta: "Ask for wholesale prices",
       footNote: "Fashion jewellery: gold-tone, silver-tone, acrylic and faux pearls.",
-      cats: { all: "All", gold: "Gold-tone", silver: "Silver-tone", acrylic: "Acrylic", rose: "Rose gold & pearls" },
+      cats: { all: "All", gold: "Gold-tone", silver: "Silver-tone", acrylic: "Acrylic", rose: "Rose gold & pearls", pearl: "Faux pearls", colour: "Colours" },
       count: (n) => `${n} model${n > 1 ? "s" : ""}`,
       order: "Order",
       orderLong: "Order on WhatsApp",
@@ -73,17 +79,20 @@
       close: "Close",
       msgProduct: (p, url) =>
         `Hello Jewelry Box 👋\nI'd like to order: ${p.name} (Ref. ${p.code}) – ${p.priceText}.\nIs it available?\n${url}`,
-      msgHello: "Hello Jewelry Box 👋 I'd like to see your available bracelets.",
+      msgHello: "Hello Jewelry Box 👋 I'd like to see your available jewellery.",
       msgWholesale: "Hello Jewelry Box 👋 I'm a reseller and I'd like your wholesale prices.",
     },
   };
-  const CAT_ORDER = ["all", "gold", "silver", "acrylic", "rose"];
+  const CAT_ORDER = ["all", "gold", "silver", "acrylic", "rose", "pearl", "colour"];
+  const TYPE_ORDER = ["bracelet", "earring"];
+  const typeOf = (p) => p.type || "bracelet";
 
   // ---------- state ----------
   const params = new URLSearchParams(location.search);
   let lang = params.get("lang") || store("get", "jb-lang") || "fr";
   if (!I18N[lang]) lang = "fr";
   let cat = "all";
+  let type = params.get("type") === "earring" ? "earring" : "bracelet";
   const visible = PRODUCTS.filter((p) => p.stock !== "finished");
 
   // ---------- helpers ----------
@@ -93,6 +102,7 @@
   }
   const t = () => I18N[lang];
   function priceText(n) {
+    if (n == null) return t().onRequest;
     return lang === "fr"
       ? new Intl.NumberFormat("fr-FR").format(n) + " FCFA"
       : new Intl.NumberFormat("en-US").format(n) + " FCFA";
@@ -140,11 +150,26 @@
     document.getElementById("year").textContent = String(new Date().getFullYear());
   }
 
+  function renderTypes() {
+    const box = document.getElementById("types");
+    box.innerHTML = "";
+    TYPE_ORDER.forEach((ty) => {
+      const n = visible.filter((p) => typeOf(p) === ty).length;
+      if (!n) return;
+      box.appendChild(el("button", {
+        type: "button", class: "type-tab", role: "tab", "aria-selected": String(ty === type),
+        onclick: () => { type = ty; cat = "all"; renderTypes(); renderFilters(); renderGrid(); },
+      }, [document.createTextNode(t().types[ty]), el("small", { text: String(n) })]));
+    });
+    document.getElementById("cat-title").textContent = type === "earring" ? t().catTitleE : t().catTitle;
+  }
+
   function renderFilters() {
     const box = document.getElementById("filters");
     box.innerHTML = "";
+    const inType = visible.filter((p) => typeOf(p) === type);
     CAT_ORDER.forEach((c) => {
-      const n = c === "all" ? visible.length : visible.filter((p) => p.cat === c).length;
+      const n = c === "all" ? inType.length : inType.filter((p) => p.cat === c).length;
       if (!n) return;
       const chip = el("button", {
         type: "button", class: "chip", role: "tab", "aria-selected": String(c === cat),
@@ -156,7 +181,7 @@
 
   function renderGrid() {
     const grid = document.getElementById("grid");
-    const list = visible.filter((p) => cat === "all" || p.cat === cat).map(view);
+    const list = visible.filter((p) => typeOf(p) === type && (cat === "all" || p.cat === cat)).map(view);
     document.getElementById("count").textContent = t().count(list.length);
     grid.innerHTML = "";
     if (!list.length) { grid.appendChild(el("p", { class: "empty", text: t().empty })); return; }
@@ -187,6 +212,7 @@
     if (!raw) return;
     const p = view(raw);
     const b = badgeText(p);
+    if (typeOf(raw) !== type) { type = typeOf(raw); cat = "all"; renderTypes(); renderFilters(); renderGrid(); }
     document.getElementById("d-img").src = `images/${p.code}.jpg`;
     document.getElementById("d-img").alt = `${p.name} – ${p.kind}`;
     document.getElementById("d-kind").textContent = p.kind;
@@ -232,7 +258,7 @@
       if (dlg.open) { const c = location.hash.slice(1); dlg.close(); openDetail(c); }
     }));
 
-  function renderAll() { renderStatic(); renderFilters(); renderGrid(); }
+  function renderAll() { renderStatic(); renderTypes(); renderFilters(); renderGrid(); }
   renderAll();
   fromHash();
 })();
