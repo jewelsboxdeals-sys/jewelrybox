@@ -12,7 +12,7 @@ const WHATSAPP_NUMBER = "";
    stock: "available" or "finished"  (finished = hidden from the site)
    left:  null, or a number to show "Plus que 2" / "Dernière pièce" when it is 1
    cat:   "gold" | "silver" | "acrylic" | "rose"   (earrings: "gold" | "silver" | "pearl" | "colour")
-   type:  leave out for bracelets, "earring" for earrings, "ring" for rings
+   type:  leave out for bracelets, "earring" for earrings, "ring" for rings, "necklace" for necklaces
    price: a number, or null to show « Prix sur demande »                         */
 const PRODUCTS = [
   // ---------- Doré / Gold-tone ----------
@@ -342,4 +342,29 @@ const PRODUCTS = [
   { code: "R40", type: "ring", cat: "silver", price: 3000, stock: "available", left: null,
     name: { fr: "Vague Fondue", en: "Molten Wave" },
     kind: { fr: "Bague argentée", en: "Silver-tone ring" } },
+  // ---------- Colliers / Necklaces (type: "necklace") ----------
+  { code: "N1", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Infini Flèche & Cœur", en: "Infinity Arrow & Heart" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N2", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Papillon Cristal", en: "Crystal Butterfly" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N3", type: "necklace", cat: "silver", price: 3000, stock: "available", left: null,
+    name: { fr: "Infini Love", en: "Infinity Love" },
+    kind: { fr: "Collier argenté", en: "Silver-tone necklace" } },
+  { code: "N4", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Ovale Nacré", en: "Pearly Oval" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N5", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Croissant Nacré", en: "Pearly Crescent" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N6", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Étoile de Mer", en: "Starfish" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N7", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Infini Love", en: "Infinity Love" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
+  { code: "N8", type: "necklace", cat: "gold", price: 3000, stock: "available", left: null,
+    name: { fr: "Ourson", en: "Teddy Bear" },
+    kind: { fr: "Collier doré", en: "Gold-tone necklace" } },
 ];
