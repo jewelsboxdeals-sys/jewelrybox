@@ -7,7 +7,7 @@
       heroEyebrow: "SPÉCIAL FÊTES",
       heroLine1: "Le luxe au poignet,",
       heroLine2: "tous à 3 000 FCFA",
-      heroSub: "Bracelets à 3 000 FCFA et boucles d’oreilles dès 2 000 FCFA. Choisis ton modèle, commande en un clic sur WhatsApp.",
+      heroSub: "Bracelets et bagues à 3 000 FCFA, boucles d’oreilles dès 2 000 FCFA. Choisis ton modèle, commande en un clic sur WhatsApp.",
       heroCta: "Voir la collection",
       heroWa: "Écrire sur WhatsApp",
       perk1a: "Commande simple", perk1b: "par WhatsApp",
@@ -15,7 +15,8 @@
       perk3a: "Prix de gros", perk3b: "pour revendeurs",
       catTitle: "Nos bracelets",
       catTitleE: "Nos boucles d’oreilles",
-      types: { bracelet: "Bracelets", earring: "Boucles d’oreilles" },
+      catTitleR: "Nos bagues",
+      types: { bracelet: "Bracelets", earring: "Boucles d’oreilles", ring: "Bagues" },
       onRequest: "Prix sur demande",
       howTitle: "Comment commander",
       how1: "Choisis ton bijou et appuie sur « Commander ».",
@@ -47,7 +48,7 @@
       heroEyebrow: "HOLIDAY SPECIAL",
       heroLine1: "Luxury on your wrist,",
       heroLine2: "all at 3,000 FCFA",
-      heroSub: "Bracelets at 3,000 FCFA and earrings from 2,000 FCFA. Pick your favourite and order in one tap on WhatsApp.",
+      heroSub: "Bracelets and rings at 3,000 FCFA, earrings from 2,000 FCFA. Pick your favourite and order in one tap on WhatsApp.",
       heroCta: "See the collection",
       heroWa: "Message us on WhatsApp",
       perk1a: "Easy ordering", perk1b: "on WhatsApp",
@@ -55,7 +56,8 @@
       perk3a: "Wholesale prices", perk3b: "for resellers",
       catTitle: "Our bracelets",
       catTitleE: "Our earrings",
-      types: { bracelet: "Bracelets", earring: "Earrings" },
+      catTitleR: "Our rings",
+      types: { bracelet: "Bracelets", earring: "Earrings", ring: "Rings" },
       onRequest: "Price on request",
       howTitle: "How to order",
       how1: "Pick your piece and tap “Order”.",
@@ -84,7 +86,7 @@
     },
   };
   const CAT_ORDER = ["all", "gold", "silver", "acrylic", "rose", "pearl", "colour"];
-  const TYPE_ORDER = ["bracelet", "earring"];
+  const TYPE_ORDER = ["bracelet", "earring", "ring"];
   const typeOf = (p) => p.type || "bracelet";
 
   // ---------- state ----------
@@ -92,7 +94,7 @@
   let lang = params.get("lang") || store("get", "jb-lang") || "fr";
   if (!I18N[lang]) lang = "fr";
   let cat = "all";
-  let type = params.get("type") === "earring" ? "earring" : "bracelet";
+  let type = TYPE_ORDER.includes(params.get("type")) ? params.get("type") : "bracelet";
   const visible = PRODUCTS.filter((p) => p.stock !== "finished");
 
   // ---------- helpers ----------
@@ -161,7 +163,7 @@
         onclick: () => { type = ty; cat = "all"; renderTypes(); renderFilters(); renderGrid(); },
       }, [document.createTextNode(t().types[ty]), el("small", { text: String(n) })]));
     });
-    document.getElementById("cat-title").textContent = type === "earring" ? t().catTitleE : t().catTitle;
+    document.getElementById("cat-title").textContent = type === "earring" ? t().catTitleE : type === "ring" ? t().catTitleR : t().catTitle;
   }
 
   function renderFilters() {
