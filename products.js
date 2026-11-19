@@ -6,7 +6,7 @@
 /* 1) Your WhatsApp number, digits only, with country code.
       Example: "237690000000". Leave "" until you have it:
       buttons will then open WhatsApp and let the buyer pick the chat. */
-const WHATSAPP_NUMBER = "";
+const WHATSAPP_NUMBER = "237677089626";
 
 /* 2) Products.
    stock: "available" or "finished"  (finished = hidden from the site)
