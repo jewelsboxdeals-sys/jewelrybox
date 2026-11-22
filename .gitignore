@@ -1,1 +1,3 @@
 .DS_Store
+.netlify/
+remote_products.js
